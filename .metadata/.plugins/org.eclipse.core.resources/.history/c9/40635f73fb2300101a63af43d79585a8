@@ -1,0 +1,9 @@
+package com.app.dao;
+
+import com.app.pojos.StayTuned;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.Optional;
+
+public interface StayTunedRepository extends JpaRepository<StayTuned, Long> {
+    Optional<StayTuned> findByEmail(String email);
+}

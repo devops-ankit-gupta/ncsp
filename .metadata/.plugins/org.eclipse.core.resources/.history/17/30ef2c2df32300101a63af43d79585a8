@@ -1,0 +1,19 @@
+package com.app.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.app.dao.NewsletterEmailRepository;
+import com.app.pojos.NewsletterEmail;
+
+@Service
+public class NewsletterService {
+
+    @Autowired
+    private NewsletterEmailRepository emailRepo;
+
+    public NewsletterEmail saveEmail(String email) {
+        NewsletterEmail newEmail = new NewsletterEmail(email);
+        return emailRepo.save(newEmail);
+    }
+}

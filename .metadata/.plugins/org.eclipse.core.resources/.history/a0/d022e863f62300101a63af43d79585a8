@@ -1,0 +1,26 @@
+package com.app.service;
+
+public class StayTunedService {
+
+}
+package com.app.service;
+
+import com.app.dao.StayTunedRepository;
+import com.app.pojos.StayTuned;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class StayTunedService {
+
+    @Autowired
+    private StayTunedRepository stayTunedRepository;
+
+    public String stayTuned(String email, String message) {
+        if (stayTunedRepository.findByEmail(email).isPresent()) {
+            return "already_registered";
+        }
+        stayTunedRepository.save(new StayTuned(email, message));
+        return "registered";
+    }
+}

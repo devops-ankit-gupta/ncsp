@@ -1,0 +1,19 @@
+package com.app.pojos;
+
+import jakarta.persistence.*;
+import lombok.Data;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "stay_tuned", uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
+@Data
+public class StayTuned {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String email;
+
+    private LocalDateTime timestamp = LocalDateTime.now();
+}

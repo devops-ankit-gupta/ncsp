@@ -1,0 +1,5 @@
+package com.app.service;
+
+public interface NewsletterService {
+    String subscribe(String email);
+}

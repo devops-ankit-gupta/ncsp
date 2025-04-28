@@ -1,0 +1,34 @@
+package com.app.controller;
+
+import com.app.pojos.NewsletterEmail;
+import com.app.dao.NewsletterEmailRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/api")
+@CrossOrigin // allow frontend requests
+public class NewsletterController {
+
+    @Autowired
+    private NewsletterEmailRepository newsletterRepo;
+
+    @PostMapping("/newsletter")
+    public ResponseEntity<String> saveNewsletter(@RequestBody NewsletterEmail emailRequest) {
+        String email = emailRequest.getEmail();
+
+        // Check if email already exists
+        Optional<NewsletterEmail> existingEmail = newsletterRepo.findByEmail(email);
+
+        if (existingEmail.isPresent()) {
+            return ResponseEntity.badRequest().body("Email already subscribed!");
+        }
+
+        // Save new email
+        newsletterRepo.save(new NewsletterEmail(email));
+        return ResponseEntity.ok("Subscription successful!");
+    }
+}

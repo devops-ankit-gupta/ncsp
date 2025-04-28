@@ -1,0 +1,44 @@
+package com.app.controller;
+
+import com.app.service.StayTunedService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/staytuned")
+@CrossOrigin(origins = "http://localhost:3000")
+public class StayTunedController {
+
+    @Autowired
+    private StayTunedService stayTunedService;
+
+    @PostMapping("/register")
+    public ResponseEntity<?> stayTuned(@RequestBody StayTunedRequest request) {
+        String result = stayTunedService.stayTuned(request.getEmail(), request.getMessage());
+
+        if (result.equals("already_registered")) {
+            return ResponseEntity.status(409).body("Already Registered for Stay Tuned");
+        }
+        return ResponseEntity.ok("Successfully Registered for Stay Tuned!");
+    }
+}
+
+class StayTunedRequest {
+    private String email;
+    private String message;
+
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+    public void setMessage(String message) {
+        this.message = message;
+    }
+}

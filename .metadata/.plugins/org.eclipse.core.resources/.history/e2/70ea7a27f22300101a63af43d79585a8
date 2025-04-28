@@ -1,0 +1,22 @@
+package com.app.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import com.app.service.NewsletterService;
+
+@RestController
+@RequestMapping("/api/newsletter")
+@CrossOrigin(origins = "*") // allow frontend to call
+public class NewsletterController {
+
+    @Autowired
+    private NewsletterService newsletterService;
+
+    @PostMapping("/subscribe")
+    public ResponseEntity<?> subscribe(@RequestBody String email) {
+        System.out.println("Received email: " + email);
+        return ResponseEntity.ok(newsletterService.saveEmail(email));
+    }
+}

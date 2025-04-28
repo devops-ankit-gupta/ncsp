@@ -1,0 +1,38 @@
+package com.app.controller;
+
+import com.app.service.StayTunedService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/stay-tuned")
+@CrossOrigin(origins = "http://localhost:3000")
+public class StayTunedController {
+
+    @Autowired
+    private StayTunedService stayTunedService;
+
+    @PostMapping("/subscribe")
+    public ResponseEntity<String> subscribe(@RequestBody EmailRequest emailRequest) {
+        String result = stayTunedService.saveStayTuned(emailRequest.getEmail());
+
+        if (result.equals("exists")) {
+            return ResponseEntity.status(409).body("Email already subscribed!");
+        }
+
+        return ResponseEntity.ok("Subscribed successfully!");
+    }
+
+    static class EmailRequest {
+        private String email;
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+    }
+}

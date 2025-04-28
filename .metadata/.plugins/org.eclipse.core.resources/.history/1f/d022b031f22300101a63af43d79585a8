@@ -1,0 +1,8 @@
+package com.app.dao;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.app.pojos.NewsletterEmail;
+
+public interface NewsletterEmailRepository extends JpaRepository<NewsletterEmail, Long> {
+    // No extra code needed, JpaRepository gives save(), findAll(), etc.
+}

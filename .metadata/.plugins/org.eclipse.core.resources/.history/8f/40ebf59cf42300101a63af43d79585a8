@@ -1,0 +1,10 @@
+package com.app.dao;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.app.pojos.NewsletterEmail;
+
+import java.util.Optional;
+
+public interface NewsletterRepositoryEmail extends JpaRepository<Newsletter, Long> {
+    Optional<Newsletter> findByEmail(String email);
+}

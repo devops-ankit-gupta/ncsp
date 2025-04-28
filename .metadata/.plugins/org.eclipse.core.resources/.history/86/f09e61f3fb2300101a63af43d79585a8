@@ -1,0 +1,27 @@
+package com.app.service;
+
+import com.app.dao.StayTunedRepository;
+import com.app.pojos.StayTuned;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.time.LocalDateTime;
+
+@Service
+public class StayTunedService {
+
+    @Autowired
+    private StayTunedRepository stayTunedRepository;
+
+    public String saveStayTuned(String email) {
+        if (stayTunedRepository.findByEmail(email).isPresent()) {
+            return "exists";
+        }
+
+        StayTuned stayTuned = new StayTuned();
+        stayTuned.setEmail(email);
+        stayTuned.setTimestamp(LocalDateTime.now());
+
+        stayTunedRepository.save(stayTuned);
+        return "saved";
+    }
+}

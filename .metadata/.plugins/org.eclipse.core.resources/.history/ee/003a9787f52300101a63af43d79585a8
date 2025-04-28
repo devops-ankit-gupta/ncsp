@@ -1,0 +1,19 @@
+package com.app.controller;
+
+import com.app.service.NewsletterService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/newsletter")
+@CrossOrigin(origins = "*")
+public class NewsletterController {
+
+    @Autowired
+    private NewsletterService newsletterService;
+
+    @PostMapping("/subscribe")
+    public String subscribe(@RequestParam String email) {
+        return newsletterService.subscribe(email);
+    }
+}

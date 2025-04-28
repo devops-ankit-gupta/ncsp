@@ -1,0 +1,22 @@
+package com.app.service;
+
+import com.app.dao.NewsletterEmailRepository;
+import com.app.pojos.NewsletterEmail;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class NewsletterService {
+
+    @Autowired
+    private NewsletterEmailRepository newsletterRepo;
+
+    public String subscribe(String email) {
+        if(newsletterRepo.findByEmail(email).isPresent()) {
+            return "Email already subscribed!";
+        }
+        NewsletterEmail newEntry = new NewsletterEmail(email);
+        newsletterRepo.save(newEntry);
+        return "Subscribed successfully!";
+    }
+}

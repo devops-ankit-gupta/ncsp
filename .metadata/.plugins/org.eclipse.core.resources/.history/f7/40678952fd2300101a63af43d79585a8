@@ -1,0 +1,45 @@
+package com.app.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import com.app.service.StayTunedService;
+
+@RestController
+@RequestMapping("/api/staytuned")
+@CrossOrigin(origins = "http://localhost:3000") // Frontend URL
+public class StayTunedController {
+
+    @Autowired
+    private StayTunedService stayTunedService;
+
+    // DTO class for taking Email input
+    public static class EmailRequest {
+        private String email;
+
+        public EmailRequest() {}
+
+        public EmailRequest(String email) {
+            this.email = email;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+    }
+
+    @PostMapping("/subscribe")
+    public ResponseEntity<String> subscribe(@RequestBody EmailRequest request) {
+        String message = stayTunedService.subscribe(request.getEmail());
+        if (message.equals("Subscribed successfully.")) {
+            return ResponseEntity.ok(message);
+        } else {
+            return ResponseEntity.status(409).body(message); // 409 = Conflict (duplicate)
+        }
+    }
+}
